@@ -1,36 +1,591 @@
+
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix odrl: <http://www.w3.org/ns/odrl/2/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix dct: <http://purl.org/dc/terms/> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ex: <http://example.org/> .
 @prefix drk: <http://w3id.org/drk/ontology/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
 
-drk:ArtworkDigitizationFeePolicy a odrl:Agreement ;
-    dct:title "Artwork Digitization Fee Policy" ;
-    dct:description "The Münzkabinett Museum must pay a fee of 500 euros for the digitization of the 'Todestag' artwork." ;
-    dct:issued "2023-10-05"^^xsd:date ;
+# --- ENHANCED POLICY SHAPES ---
+
+# Complete Policy Validation
+ex:PolicyShape a sh:NodeShape ;
+    sh:targetClass odrl:Policy ;
+    sh:name "ODRL Policy Validation" ;
+    sh:description "Validates the basic structure and required properties of ODRL policies" ;
     
-    odrl:obligation [
-        a odrl:Duty ;
-        odrl:action odrl:compensate ;
-        odrl:target drk:TodestagArtwork ;
-        odrl:assigner drk:DigitizationServiceProvider ;
-        odrl:assignee drk:MunzkabinettMuseum ;
-        
-        odrl:constraint [
-            a odrl:Constraint ;
-            odrl:leftOperand odrl:payAmount ;
-            odrl:operator odrl:eq ;
-            odrl:rightOperand "500.00"^^xsd:decimal
-        ]
+    # Required: Policy type
+    sh:property [
+        sh:path rdf:type ;
+        sh:minCount 1 ;
+        sh:message "Policy must have a type (Agreement, Offer, or Set)" ;
+        sh:or (
+            [ sh:hasValue odrl:Agreement ]
+            [ sh:hasValue odrl:Offer ]
+            [ sh:hasValue odrl:Set ]
+        )
+    ] ;
+    
+    # Required: Unique identifier
+    sh:property [
+        sh:path odrl:uid ;
+        sh:minCount 1 ;
+        sh:message "Policy must have a unique identifier (uid)" ;
+    ] ;
+    
+    # Required: At least one rule
+    sh:property [
+        sh:path [sh:alternativePath (odrl:permission odrl:prohibition odrl:obligation)] ;
+        sh:minCount 1 ;
+        sh:message "Policy must have at least one permission, prohibition, or obligation" ;
+    ] ;
+    
+    # Recommended: Metadata properties
+    sh:property [
+        sh:path dct:title ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Policies should have descriptive titles" ;
+    ] ;
+    
+    sh:property [
+        sh:path dct:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Policies should include a clear description" ;
+    ] ;
+    
+    sh:property [
+        sh:path dct:issued ;
+        sh:or (
+            [ sh:datatype xsd:date ]
+            [ sh:datatype xsd:dateTime ]
+        ) ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Policies should specify an issue date" ;
+    ] ;
+
+    # Recommended: Versioning
+    sh:property [
+        sh:path dct:hasVersion ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Consider versioning policies" ;
+    ] ;
+    
+    # Recommended: Language
+    sh:property [
+        sh:path dct:language ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Specify the policy language (e.g., 'en', 'de')" ;
+    ] ;
+    
+    # Recommended: Profile
+    sh:property [
+        sh:path odrl:profile ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Reference the ODRL Profile used" ;
     ] .
 
-drk:TodestagArtwork a odrl:Asset, dct:ResourceType ;
-    rdfs:label "Todestag artwork" .
 
-drk:MunzkabinettMuseum a odrl:Party, foaf:Organization ;
-    rdfs:label "Münzkabinett Museum" .
+# Permission with Enhanced Validation
+ex:PermissionShape a sh:NodeShape ;
+    sh:targetClass odrl:Permission ;
+    sh:targetObjectsOf odrl:permission ;
+    sh:name "ODRL Permission Validation" ;
+    
+    # Required: Type
+    sh:property [
+        sh:path rdf:type ;
+        sh:hasValue odrl:Permission ;
+        sh:minCount 1 ;
+        sh:message "Permission must be explicitly typed as odrl:Permission" ;
+    ] ;
+    
+    # Required: Action
+    sh:property [
+        sh:path odrl:action ;
+        sh:minCount 1 ;
+        sh:message "Permission must specify at least one action" ;
+    ] ;
+    
+    # Required: Target
+    sh:property [
+        sh:path odrl:target ;
+        sh:minCount 1 ;
+        sh:message "Permission must specify a target asset" ;
+    ] ;
+    
+    # Recommended: Parties
+    sh:property [
+        sh:path odrl:assigner ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Specify who grants the permission (assigner)" ;
+    ] ;
+    
+    sh:property [
+        sh:path odrl:assignee ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Specify who receives the permission (assignee)" ;
+    ] ;
+    
+    # Recommended: Duties attached to permissions
+    sh:property [
+        sh:path odrl:duty ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Consider adding duties/obligations to permissions" ;
+    ] .
 
-drk:DigitizationServiceProvider a odrl:Party, foaf:Organization ;
-    rdfs:label "Digitization Service Provider" .
+# Prohibition with Enhanced Validation
+ex:ProhibitionShape a sh:NodeShape ;
+    sh:targetClass odrl:Prohibition ;
+    sh:targetObjectsOf odrl:prohibition ;
+    sh:name "ODRL Prohibition Validation" ;
+    
+    # Required: Type
+    sh:property [
+        sh:path rdf:type ;
+        sh:hasValue odrl:Prohibition ;
+        sh:minCount 1 ;
+        sh:message "Prohibition must be explicitly typed as odrl:Prohibition" ;
+    ] ;
+    
+    # Required: Action
+    sh:property [
+        sh:path odrl:action ;
+        sh:minCount 1 ;
+        sh:message "Prohibition must specify at least one action" ;
+    ] ;
+    
+    # Required: Target
+    sh:property [
+        sh:path odrl:target ;
+        sh:minCount 1 ;
+        sh:message "Prohibition must specify a target asset" ;
+    ] ;
+    
+    # Recommended: Parties
+    sh:property [
+        sh:path odrl:assigner ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Specify who enforces the prohibition (assigner)" ;
+    ] ;
+    
+    sh:property [
+        sh:path odrl:assignee ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Specify who is prohibited from the action (assignee)" ;
+    ] ;
+    
+    # Recommended: Remedies
+    sh:property [
+        sh:path odrl:remedy ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Consider specifying remedies for violation" ;
+    ] .
+
+# Duty/Obligation with Enhanced Validation
+ex:DutyShape a sh:NodeShape ;
+    sh:targetClass odrl:Duty ;
+    sh:targetObjectsOf odrl:obligation, odrl:duty, odrl:consequence ;
+    sh:name "ODRL Duty Validation" ;
+    
+    # Required: Type
+    sh:property [
+        sh:path rdf:type ;
+        sh:hasValue odrl:Duty ;
+        sh:minCount 1 ;
+        sh:message "Duty must be explicitly typed as odrl:Duty" ;
+    ] ;
+    
+    # Required: Action
+    sh:property [
+        sh:path odrl:action ;
+        sh:minCount 1 ;
+        sh:message "Duty must specify at least one action" ;
+    ] ;
+    
+    # Recommended: Parties
+    sh:property [
+        sh:path odrl:assigner ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Specify who requires the duty (assigner)" ;
+    ] ;
+    
+    sh:property [
+        sh:path odrl:assignee ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Specify who must fulfill the duty (assignee)" ;
+    ] ;
+    
+    # Recommended: Consequences
+    sh:property [
+        sh:path odrl:failure ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Consider specifying consequences for duty failure" ;
+    ] .
+
+# --- ENHANCED ASSET AND PARTY SHAPES ---
+
+# Complete Asset Validation
+ex:AssetShape a sh:NodeShape ;
+    sh:targetClass odrl:Asset ;
+    sh:targetObjectsOf odrl:target ;
+    sh:name "ODRL Asset Validation" ;
+    
+    # Required: Type
+    sh:property [
+        sh:path rdf:type ;
+        sh:minCount 1 ;
+        sh:message "Assets must be explicitly typed" ;
+    ] ;
+    
+    # Recommended: Descriptive properties
+    sh:property [
+        sh:path rdfs:label ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Assets should have a human-readable label" ;
+    ] ;
+    
+    sh:property [
+        sh:path dct:title ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Assets should have a title" ;
+    ] ;
+    
+    sh:property [
+        sh:path dct:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Assets should include a description" ;
+    ] ;
+    
+    # Recommended: Identification
+    sh:property [
+        sh:path dct:identifier ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Consider providing a formal identifier" ;
+    ] ;
+    
+    sh:property [
+        sh:path odrl:uid ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Consider providing a unique identifier" ;
+    ] ;
+    
+    # Recommended: Classification
+    sh:property [
+        sh:path dct:type ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Classify assets by type (e.g., dct:Dataset, foaf:Document)" ;
+    ] ;
+    
+    # Recommended: Format
+    sh:property [
+        sh:path dct:format ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Specify the asset format (e.g., MIME type)" ;
+    ] .
+
+# Complete Party Validation
+ex:PartyShape a sh:NodeShape ;
+    sh:targetClass odrl:Party ;
+    sh:targetObjectsOf odrl:assignee, odrl:assigner ;
+    sh:name "ODRL Party Validation" ;
+    
+    # Required: Type
+    sh:property [
+        sh:path rdf:type ;
+        sh:minCount 1 ;
+        sh:message "Parties must be explicitly typed" ;
+    ] ;
+    
+    # Recommended: Identification
+    sh:property [
+        sh:path rdfs:label ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Parties should have a human-readable label" ;
+    ] ;
+    
+    sh:property [
+        sh:path foaf:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Parties should have a name property" ;
+    ] ;
+    
+    sh:property [
+        sh:path dct:identifier ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Parties should have a formal identifier" ;
+    ] ;
+    
+    # Recommended: Contact information
+    sh:property [
+        sh:path foaf:mbox ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Consider providing contact email" ;
+    ] ;
+    
+    sh:property [
+        sh:path foaf:homepage ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Consider providing a homepage URL" ;
+    ] ;
+    
+    # Recommended: Organization details
+    sh:property [
+        sh:path foaf:Organization ;
+        sh:or ( [ sh:hasValue foaf:Organization ] ) ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Info: This party represents an organization" ;
+    ] .
+
+# --- ENHANCED CONSTRAINT SHAPES ---
+
+# Complete Constraint Validation
+ex:ConstraintShape a sh:NodeShape ;
+    sh:targetClass odrl:Constraint ;
+    sh:targetObjectsOf odrl:constraint ;
+    sh:name "ODRL Constraint Validation" ;
+    
+    # Required: Type
+    sh:property [
+        sh:path rdf:type ;
+        sh:hasValue odrl:Constraint ;
+        sh:minCount 1 ;
+        sh:message "Constraints must be explicitly typed as odrl:Constraint" ;
+    ] ;
+    
+    # Required: Components
+    sh:property [
+        sh:path odrl:leftOperand ;
+        sh:minCount 1 ;
+        sh:message "Constraint must specify a leftOperand" ;
+    ] ;
+    
+    sh:property [
+        sh:path odrl:operator ;
+        sh:minCount 1 ;
+        sh:message "Constraint must specify an operator" ;
+    ] ;
+    
+    sh:property [
+        sh:path [sh:alternativePath (odrl:rightOperand odrl:rightOperandReference)] ;
+        sh:minCount 1 ;
+        sh:message "Constraint must specify either a rightOperand or rightOperandReference" ;
+    ] ;
+    
+    # Recommended: Status
+    sh:property [
+        sh:path odrl:status ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Consider specifying constraint status" ;
+    ] ;
+    
+    # Recommended: Units
+    sh:property [
+        sh:path odrl:unit ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Specify units for quantitative constraints" ;
+    ] ;
+    
+    # Recommended: Datatype
+    sh:property [
+        sh:path odrl:dataType ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Specify the datatype for constraint values" ;
+    ] .
+
+# Logical Constraint Validation
+ex:LogicalConstraintShape a sh:NodeShape ;
+    sh:targetObjectsOf odrl:and, odrl:or, odrl:xone ;
+    sh:name "ODRL Logical Constraint Validation" ;
+    
+    sh:property [
+        sh:path [ sh:alternativePath (odrl:and odrl:or odrl:xone) ] ;
+        sh:minCount 2 ;
+        sh:message "Logical constraint groups must contain at least two constraints" ;
+    ] .
+
+# --- ACTION SHAPES ---
+
+# Action Validation and Recommendations
+ex:ActionShape a sh:NodeShape ;
+    sh:targetObjectsOf odrl:action ;
+    sh:name "ODRL Action Validation" ;
+    
+    # Recommended: Refinement
+    sh:property [
+        sh:path odrl:refinement ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Consider refining actions with specific parameters" ;
+    ] ;
+    
+    # Recommended: Documentation
+    sh:property [
+        sh:path rdfs:label ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Actions should have descriptive labels" ;
+    ] ;
+    
+    sh:property [
+        sh:path rdfs:comment ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Actions should include explanatory comments" ;
+    ] .
+
+# --- POLICY COLLECTION SHAPES ---
+
+# Policy Collections (Sets)
+ex:PolicySetShape a sh:NodeShape ;
+    sh:targetNode [ rdf:type odrl:Set ] ;
+    sh:name "ODRL Policy Set Validation" ;
+    
+    # Recommended: Structural properties
+    sh:property [
+        sh:path odrl:includes ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Policy sets should include references to contained policies" ;
+    ] ;
+    
+    sh:property [
+        sh:path odrl:inheritAllowed ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Specify whether inheritance is allowed in policy sets" ;
+    ] ;
+    
+    sh:property [
+        sh:path odrl:inheritFrom ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Specify parent policy sets for inheritance" ;
+    ] .
+
+# --- ADDITIONAL METADATA SHAPES ---
+
+# Comprehensive Policy Metadata
+ex:PolicyMetadataShape a sh:NodeShape ;
+    sh:targetClass odrl:Policy ;
+    sh:name "ODRL Policy Metadata Recommendations" ;
+    
+    # Recommended: Jurisdiction
+    sh:property [
+        sh:path odrl:jurisdiction ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Specify applicable jurisdiction" ;
+    ] ;
+    
+    # Recommended: Creator/Publisher
+    sh:property [
+        sh:path dct:creator ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Identify the policy creator" ;
+    ] ;
+    
+    sh:property [
+        sh:path dct:publisher ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Identify the policy publisher" ;
+    ] ;
+    
+    # Recommended: Relationships
+    sh:property [
+        sh:path dct:relation ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Link to related policies or resources" ;
+    ] ;
+    
+    sh:property [
+        sh:path dct:replaces ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Reference any policy this replaces" ;
+    ] ;
+    
+    sh:property [
+        sh:path dct:isReplacedBy ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Reference the policy that replaces this one" ;
+    ] ;
+    
+    # Recommended: Access and distribution
+    sh:property [
+        sh:path dct:accessRights ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Specify access requirements for the policy itself" ;
+    ] ;
+    
+    sh:property [
+        sh:path dct:rightsHolder ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Identify the rights holder for the policy" ;
+    ] ;
+    
+    # Recommended: Provenance
+    sh:property [
+        sh:path dct:source ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Document the source of the policy" ;
+    ] ;
+    
+    sh:property [
+        sh:path dct:provenance ;
+        sh:minCount 0 ;
+        sh:severity sh:Info ;
+        sh:message "Recommendation: Provide provenance information" ;
+    ] .
