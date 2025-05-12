@@ -1,0 +1,49 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk: <http://w3id.org/drk/ontology/> .
+
+drk:RareBooksCollection a odrl:Asset, dct:Dataset ;
+    rdfs:label "RareBooksCollection" .
+
+drk:ResearchInstitution a odrl:Party, foaf:Organization ;
+    rdfs:label "Research Institution" .
+
+drk:AnonymizedValues a odrl:Party ;
+    rdfs:label "Anonymized Values" .
+
+drk:DatasetAccessPolicy a odrl:Agreement ;
+    dct:title "Dataset Access Policy" ;
+    dct:description "Policy for accessing the RareBooksCollection dataset" ;
+    dct:issued "2025-09-15"^^xsd:date ;
+    
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:read ;
+        odrl:target drk:RareBooksCollection ;
+        odrl:assigner drk:ResearchInstitution ;
+        odrl:assignee drk:ResearchInstitution ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:dateTime ;
+            odrl:operator odrl:gteq ;
+            odrl:rightOperand "2025-06-01T00:00:00.000Z"^^xsd:dateTime
+        ] ;
+
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:dateTime ;
+            odrl:operator odrl:lteq ;
+            odrl:rightOperand "2026-12-01T00:00:00.000Z"^^xsd:dateTime
+        ] ;
+        
+        odrl:duty [
+            a odrl:Duty ;
+            odrl:action odrl:modify ;
+            odrl:target drk:AnonymizedValues
+        ]
+    ] .

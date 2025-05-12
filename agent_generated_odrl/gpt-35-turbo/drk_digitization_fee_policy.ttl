@@ -1,0 +1,32 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk: <http://w3id.org/drk/ontology/> .
+
+drk:MuenzkabinettMuseum a odrl:Party, foaf:Organization ;
+    rdfs:label "Münzkabinett Museum" .
+
+drk:TodestagArtwork a odrl:Asset, dct:ResourceType ;
+    rdfs:label "'Todestag' Artwork" .
+
+drk:DigitizationPermissionPolicy a odrl:Permission ;
+    dct:title "Digitization Permission Policy" ;
+    dct:description "Policy for digitization permission" ;
+    dct:issued "YYYY-MM-DD"^^xsd:date ;
+    
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:distribute ;
+        odrl:target drk:TodestagArtwork ;
+        odrl:assigner drk:MuenzkabinettMuseum ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:payAmount ;
+            odrl:operator odrl:eq ;
+            odrl:rightOperand "500.00"^^xsd:decimal
+        ]
+    ] .

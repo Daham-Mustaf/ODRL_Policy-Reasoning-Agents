@@ -1,0 +1,43 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk: <http://w3id.org/drk/ontology/> .
+
+drk:UC4PartnerDatasetAccessOffer a odrl:Offer ;
+    dct:title "Access Offer for UC4 Partner Dataset" ;
+    dct:description "The Daten Raumkultur project offers access to the UC4 Partner dataset via the DRK Connector platform." ;
+    dct:issued "2023-10-01"^^xsd:date ;
+
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:read ;
+        odrl:target drk:UC4PartnerDataset ;
+        odrl:assigner drk:DatenRaumkulturProject ;
+        odrl:assignee drk:User ;
+
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:dateTime ;
+            odrl:operator odrl:lt ;
+            odrl:rightOperand "2030-01-01T09:00:01Z"^^xsd:dateTime
+        ] ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:spatial ;
+            odrl:operator odrl:eq ;
+            odrl:rightOperand "Germany"^^xsd:string
+        ]
+    ] .
+
+drk:UC4PartnerDataset a odrl:Asset, dct:Resource ;
+    rdfs:label "UC4 Partner Dataset" .
+
+drk:DatenRaumkulturProject a odrl:Party, foaf:Organization ;
+    rdfs:label "Daten Raumkultur Project" .
+
+drk:User a odrl:Party ;
+    rdfs:label "Authorized User" .

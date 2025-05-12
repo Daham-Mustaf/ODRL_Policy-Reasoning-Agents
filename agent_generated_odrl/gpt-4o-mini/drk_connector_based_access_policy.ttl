@@ -1,0 +1,43 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk: <http://w3id.org/drk/ontology/> .
+
+drk:MuseumArtifactAccessPolicy a odrl:Offer ;
+    dct:title "Access Policy for Museum Artifact Dataset" ;
+    dct:description "Access to the dataset titled 'Museum Artifact' is permitted only to approved dataspace participants operating through authorized connectors." ;
+    dct:issued "2023-10-01"^^xsd:date ;
+    
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:use ;
+        odrl:target drk:MuseumArtifact ;
+        odrl:assigner drk:InstitutionManagingDataset ; # Placeholder for the actual assigner
+        odrl:assignee drk:ApprovedDataspaceParticipants ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:recipient ;
+            odrl:operator odrl:isA ;
+            odrl:rightOperand "approved-dataspace-participants"^^xsd:string
+        ] ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:virtualLocation ;
+            odrl:operator odrl:eq ;
+            odrl:rightOperand "?connector1URI"^^xsd:string
+        ]
+    ] .
+
+drk:MuseumArtifact a odrl:Asset, dct:ResourceType ;
+    rdfs:label "Museum Artifact Dataset" .
+
+drk:ApprovedDataspaceParticipants a odrl:Party ;
+    rdfs:label "Approved Dataspace Participants" .
+
+drk:InstitutionManagingDataset a odrl:Party, foaf:Organization ;
+    rdfs:label "Institution Managing Dataset" .

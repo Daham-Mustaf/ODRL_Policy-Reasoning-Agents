@@ -1,0 +1,49 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk: <http://w3id.org/drk/ontology/> .
+
+drk:GroßeDüneAccessPolicy a odrl:Offer ;
+    dct:title "Public Access to Digital Reproductions of Große Düne" ;
+    dct:description "This policy permits public access to view and download digital reproductions of the artwork 'Große Düne' by C. D. Friedrich for sharing and non-commercial use." ;
+    dct:issued "2023-10-01"^^xsd:date ;
+
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:read ;
+        odrl:target drk:GroßeDüneArtwork ;
+        odrl:assigner drk:SkulpturensammlungMuseum ;
+        odrl:assignee drk:MünzkabinettMuseum ;
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:purpose ;
+            odrl:operator odrl:eq ;
+            odrl:rightOperand "non-commercial"^^xsd:string
+        ]
+    ] ;
+
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:reproduce ;
+        odrl:target drk:GroßeDüneArtwork ;
+        odrl:assigner drk:SkulpturensammlungMuseum ;
+        odrl:assignee drk:MünzkabinettMuseum ;
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:purpose ;
+            odrl:operator odrl:eq ;
+            odrl:rightOperand "non-commercial"^^xsd:string
+        ]
+    ] .
+
+drk:GroßeDüneArtwork a odrl:Asset, dct:Resource ;
+    rdfs:label "Große Düne by C. D. Friedrich" .
+
+drk:SkulpturensammlungMuseum a odrl:Party, foaf:Organization ;
+    rdfs:label "Skulpturensammlung Museum" .
+
+drk:MünzkabinettMuseum a odrl:Party, foaf:Organization ;
+    rdfs:label "Museum Münzkabinett" .

@@ -1,0 +1,38 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk: <http://w3id.org/drk/ontology/> .
+
+drk:TheaterUniversityCollaborationPolicy a odrl:Agreement ;
+    dct:title "Theater University Collaboration Policy" ;
+    dct:description "Policy for collaboration between DE_Staatstheater_Augsburg and a local university" ;
+    dct:issued "2023-09-15"^^xsd:date ;
+    
+    # Permission rule
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:read ;
+        odrl:target drk:HistoricalArchives ;
+        odrl:assigner drk:DEStaatstheaterAugsburg ;
+        odrl:assignee drk:LocalUniversity ;
+        
+        # Constraint for free access for scientific research
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:purpose ;
+            odrl:operator odrl:eq ;
+            odrl:rightOperand "scientific research"^^xsd:string
+        ]
+    ] .
+
+drk:HistoricalArchives a odrl:Asset, dct:Dataset ;
+    rdfs:label "Historical Archives" .
+
+drk:DEStaatstheaterAugsburg a odrl:Party, foaf:Organization ;
+    rdfs:label "DE_Staatstheater_Augsburg" .
+
+drk:LocalUniversity a odrl:Party ;
+    rdfs:label "Local University" .

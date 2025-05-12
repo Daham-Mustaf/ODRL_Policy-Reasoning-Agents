@@ -1,0 +1,79 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk:  <http://w3id.org/drk/ontology/> .
+
+drk:ClinicalTrialSecondaryAnalysisPolicy a odrl:Agreement ;
+    dct:title "Clinical Trial Secondary Analysis Policy" ;
+    dct:description "This policy governs access to clinical trial research data from MedResearch Institute, allowing approved data scientists at HealthAnalytics Corp to perform secondary analysis under strict preconditions. The conditions include mandatory anonymization of personal identifiers, formal approval of the data request by the Ethics Committee, use of secured servers provided by MedResearch, and submission of derived findings for review 14 days before publication. Access is granted for 180 days from the approval date and is limited to datasets explicitly named in the request form." ;
+    dct:issued "2023-10-01"^^xsd:date ;
+    
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:read ;
+        odrl:target drk:ClinicalTrialResearchData ;
+        odrl:assigner drk:MedResearchInstitute ;
+        odrl:assignee drk:HealthAnalyticsDataScientists ;
+        
+        # Access period: 180 days from approval date
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:timeInterval ;
+            odrl:operator odrl:eq ;
+            odrl:rightOperand "P180D"^^xsd:duration
+        ] ;
+        
+        # Duty 1: Anonymization requirement
+        odrl:duty [
+            a odrl:Duty ;
+            odrl:action odrl:modify ;
+            dct:description "All personal identifiers must be removed through the institute's anonymization pipeline."
+        ] ;
+        
+        # Duty 2: Formal data request approval by the Ethics Committee
+        odrl:duty [
+            a odrl:Duty ;
+            odrl:action odrl:use ;
+            dct:description "A formal data request must be approved by the Ethics Committee."
+        ] ;
+        
+        # Duty 3: Analysis on secured servers provided by MedResearch
+        odrl:duty [
+            a odrl:Duty ;
+            odrl:action odrl:use ;
+            odrl:target drk:MedResearchSecuredServers ;
+            dct:description "Analysis must be conducted only on secured servers provided by MedResearch."
+        ] ;
+        
+        # Duty 4: Submission of derived findings for review prior to publication
+        odrl:duty [
+            a odrl:Duty ;
+            odrl:action odrl:present ;
+            dct:description "Any derived findings must be submitted for review 14 days before publication." ;
+            odrl:constraint [
+                a odrl:Constraint ;
+                odrl:leftOperand odrl:delayPeriod ;
+                odrl:operator odrl:eq ;
+                odrl:rightOperand "P14D"^^xsd:duration
+            ]
+        ]
+    ] .
+
+# Asset definition: Clinical trial research data limited to datasets named in the request form
+drk:ClinicalTrialResearchData a odrl:Asset, dct:ResourceType ;
+    rdfs:label "Clinical Trial Research Data" ;
+    dct:description "Research data from clinical trials conducted by MedResearch Institute. Access is limited to the datasets explicitly named in the request form." .
+
+# Party definitions
+drk:MedResearchInstitute a odrl:Party, foaf:Organization ;
+    rdfs:label "MedResearch Institute" .
+
+drk:HealthAnalyticsDataScientists a odrl:Party ;
+    rdfs:label "Approved Data Scientists at HealthAnalytics Corp" .
+
+# Asset definition: Secured servers provided by MedResearch (target for Duty 3)
+drk:MedResearchSecuredServers a odrl:Asset ;
+    rdfs:label "Secured Servers Provided by MedResearch" .

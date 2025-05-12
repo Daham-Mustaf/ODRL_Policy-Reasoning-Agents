@@ -1,0 +1,159 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk: <http://w3id.org/drk/ontology/> .
+
+drk:ClinicalTrialDataAsset a odrl:Asset, dct:Dataset ;
+    rdfs:label "Clinical Trial Data" .
+
+drk:MedResearchInstitute a odrl:Party, foaf:Organization ;
+    rdfs:label "MedResearch Institute" .
+
+drk:HealthAnalyticsCorp a odrl:Party, foaf:Organization ;
+    rdfs:label "HealthAnalytics Corp" .
+
+drk:EthicsCommittee a odrl:Party ;
+    rdfs:label "Ethics Committee" .
+
+drk:MedResearchDataAccessPolicy a odrl:Agreement ;
+    dct:title "MedResearch Clinical Trial Data Access Policy" ;
+    dct:description "Policy for accessing clinical trial data from MedResearch Institute" ;
+    dct:issued "2022-10-20"^^xsd:date ;
+    
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:read ;
+        odrl:target drk:ClinicalTrialDataAsset ;
+        odrl:assigner drk:MedResearchInstitute ;
+        odrl:assignee drk:HealthAnalyticsCorp ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:count ;
+            odrl:operator odrl:lteq ;
+            odrl:rightOperand "1"^^xsd:integer
+        ] ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:dateTime ;
+            odrl:operator odrl:gteq ;
+            odrl:rightOperand "180"^^xsd:integer
+        ] ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:and (
+                [
+                    a odrl:Constraint ;
+                    odrl:leftOperand odrl:spatial ;
+                    odrl:operator odrl:eq ;
+                    odrl:rightOperand "secured-servers"^^xsd:string
+                ]
+                [
+                    a odrl:Constraint ;
+                    odrl:leftOperand odrl:fileFormat ;
+                    odrl:operator odrl:eq ;
+                    odrl:rightOperand "application/octet-stream"^^xsd:string
+                ]
+            )
+        ] ;
+        
+        odrl:duty [
+            a odrl:Duty ;
+            odrl:action odrl:attribute ;
+            odrl:target drk:MedResearchInstitute
+        ] ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:or (
+                [
+                    a odrl:Constraint ;
+                    odrl:leftOperand odrl:elapsedTime ;
+                    odrl:operator odrl:lteq ;
+                    odrl:rightOperand "P180D"^^xsd:duration
+                ]
+                [
+                    a odrl:Constraint ;
+                    odrl:leftOperand odrl:dateTime ;
+                    odrl:operator odrl:gteq ;
+                    odrl:rightOperand "180 days from approval date"^^xsd:string
+                ]
+            )
+        ] ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:language ;
+            odrl:operator odrl:eq ;
+            odrl:rightOperand "en"^^xsd:string
+        ] ;
+    ] ;
+    
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:use ;
+        odrl:target drk:ClinicalTrialDataAsset ;
+        odrl:assigner drk:MedResearchInstitute ;
+        odrl:assignee drk:HealthAnalyticsCorp ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:and (
+                [
+                    a odrl:Constraint ;
+                    odrl:leftOperand odrl:payAmount ;
+                    odrl:operator odrl:eq ;
+                    odrl:rightOperand "0.0"^^xsd:decimal
+                ]
+                [
+                    a odrl:Constraint ;
+                    odrl:leftOperand odrl:fileFormat ;
+                    odrl:operator odrl:eq ;
+                    odrl:rightOperand "application/octet-stream"^^xsd:string
+                ]
+            )
+        ] ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:dateTime ;
+            odrl:operator odrl:gteq ;
+            odrl:rightOperand "180 days from approval date"^^xsd:string
+        ] ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:and (
+                [
+                    a odrl:Constraint ;
+                    odrl:leftOperand odrl:language ;
+                    odrl:operator odrl:eq ;
+                    odrl:rightOperand "en"^^xsd:string
+                ]
+                [
+                    a odrl:Constraint ;
+                    odrl:leftOperand odrl:percentage ;
+                    odrl:operator odrl:eq ;
+                    odrl:rightOperand "100.0"^^xsd:decimal
+                ]
+            )
+        ] ;
+    ] ;
+    
+    odrl:duty [
+        a odrl:Duty ;
+        odrl:action odrl:extract ;
+        odrl:target drk:DerivedFindings
+    ] ;
+
+    odrl:constraint [
+        a odrl:Constraint ;
+        odrl:leftOperand odrl:dateTime ;
+        odrl:operator odrl:lt ;
+        odrl:rightOperand "14 days before publication"^^xsd:string
+    ] .

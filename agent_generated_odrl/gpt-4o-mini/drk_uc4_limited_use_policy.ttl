@@ -1,0 +1,38 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk: <http://w3id.org/drk/ontology/> .
+
+drk:DatenRaumkulturAccessPolicy a odrl:Offer ;
+    dct:title "Daten Raumkultur Dataset Access Contract" ;
+    dct:description "Contract offered by Daten Raumkultur for accessing the dataset" ;
+    dct:issued "2023-10-01"^^xsd:date ;
+
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:use ;
+        odrl:target drk:Datasetd1234 ;
+        odrl:assigner drk:DatenRaumkultur ;
+        odrl:assignee drk:UC4Partner ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:count ;
+            odrl:operator odrl:lteq ;
+            odrl:rightOperand "30"^^xsd:integer
+        ]
+    ] .
+
+# Asset definition
+drk:Datasetd1234 a odrl:Asset, dct:Dataset ;
+    rdfs:label "Dataset used in Daten Raumkultur project" .
+
+# Party definitions
+drk:DatenRaumkultur a odrl:Party, foaf:Organization ;
+    rdfs:label "Daten Raumkultur Project" .
+
+drk:UC4Partner a odrl:Party, foaf:Organization ;
+    rdfs:label "UC4 Partner" .

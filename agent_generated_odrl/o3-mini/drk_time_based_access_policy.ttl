@@ -1,0 +1,62 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk:  <http://w3id.org/drk/ontology/> .
+
+drk:RareBooksCollectionAccessPolicy a odrl:Agreement ;
+    dct:title "RareBooks Collection Access Policy" ;
+    dct:description "This policy permits access (read) to the RareBooksCollection dataset only between June 1, 2025 and December 1, 2026. In addition, participants are obliged to replace the name field in any derived dataset with anonymized values." ;
+    dct:issued "2023-10-11"^^xsd:date ;
+    
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:read ;
+        odrl:target drk:RareBooksCollection ;
+        odrl:assigner drk:HeritageInstitution ;
+        odrl:assignee drk:Participant ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:and (
+                [
+                    a odrl:Constraint ;
+                    odrl:leftOperand odrl:dateTime ;
+                    odrl:operator odrl:gteq ;
+                    odrl:rightOperand "2025-06-01T00:00:00.000Z"^^xsd:dateTime
+                ]
+                [
+                    a odrl:Constraint ;
+                    odrl:leftOperand odrl:dateTime ;
+                    odrl:operator odrl:lt ;
+                    odrl:rightOperand "2026-12-01T00:00:00.000Z"^^xsd:dateTime
+                ]
+            )
+        ] ;
+        
+        odrl:duty [
+            a odrl:Duty ;
+            odrl:action odrl:modify ;
+            odrl:target drk:DerivedRareBooksCollection ;
+            odrl:constraint [
+                a odrl:Constraint ;
+                odrl:leftOperand drk:fieldReplacement ;
+                odrl:operator odrl:eq ;
+                odrl:rightOperand "name->anonymized"^^xsd:string
+            ]
+        ]
+    ] .
+
+drk:RareBooksCollection a odrl:Asset, dct:Resource ;
+    rdfs:label "RareBooksCollection Dataset" .
+
+drk:DerivedRareBooksCollection a odrl:Asset, dct:Resource ;
+    rdfs:label "Derived Dataset from RareBooksCollection" .
+
+drk:HeritageInstitution a odrl:Party, foaf:Organization ;
+    rdfs:label "Heritage Institution" .
+
+drk:Participant a odrl:Party ;
+    rdfs:label "Participant" .

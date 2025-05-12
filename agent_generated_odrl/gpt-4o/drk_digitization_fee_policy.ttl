@@ -1,0 +1,31 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk: <http://w3id.org/drk/ontology/> .
+
+drk:ArtworkDigitizationPolicy a odrl:Set ;
+    dct:title "Artwork Digitization Fee Policy" ;
+    dct:description "Policy requiring Münzkabinett Museum to pay a fee for digitization." ;
+    dct:issued "2023-10-10"^^xsd:date ;
+    
+    odrl:obligation [
+        a odrl:Duty ;
+        odrl:action odrl:compensate ;
+        odrl:target drk:TodestagArtwork ;
+        odrl:assigner drk:MünzkabinettMuseum ;
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:payAmount ;
+            odrl:operator odrl:eq ;
+            odrl:rightOperand "500.00"^^xsd:decimal
+        ]
+    ] .
+
+drk:TodestagArtwork a odrl:Asset, dct:Image ;
+    rdfs:label "Todestag Artwork" .
+
+drk:MünzkabinettMuseum a odrl:Party, foaf:Organization ;
+    rdfs:label "Münzkabinett Museum" .

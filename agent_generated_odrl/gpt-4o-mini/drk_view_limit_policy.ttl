@@ -1,0 +1,32 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk: <http://w3id.org/drk/ontology/> .
+
+drk:ImageViewingPolicy a odrl:Set ;
+    dct:title "Image Viewing Policy" ;
+    dct:description "Allows UC4 partners to view a maximum of 50 images per day." ;
+    dct:issued "2023-10-01"^^xsd:date ;  # Example issued date
+    
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:read ;
+        odrl:target drk:ImageCollection ;
+        odrl:assignee drk:UC4Partner ;  # Assumption for UC4 partners
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:count ;
+            odrl:operator odrl:lteq ;
+            odrl:rightOperand "50"^^xsd:integer
+        ]
+    ] .
+
+drk:ImageCollection a odrl:Asset, dct:ResourceType ;
+    rdfs:label "Image Collection" .
+
+drk:UC4Partner a odrl:Party ;
+    rdfs:label "UC4 Partner" .

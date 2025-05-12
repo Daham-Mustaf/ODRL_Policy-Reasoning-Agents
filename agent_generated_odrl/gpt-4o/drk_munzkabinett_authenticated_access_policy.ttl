@@ -1,0 +1,48 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk: <http://w3id.org/drk/ontology/> .
+
+drk:ArchiveEventAccessPolicy a odrl:Agreement ;
+    dct:title "ArchiveEvent Access Policy" ;
+    dct:description "Policy ensuring authenticated user access to the ArchiveEvent digital repository." ;
+    dct:issued "2023-10-31"^^xsd:date ;
+    
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:read, odrl:download ;
+        odrl:target drk:ArchiveEventRepository ;
+        odrl:assigner drk:MuenzkabinettMuseum ;
+        odrl:assignee drk:AuthenticatedUser ;
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:authMethod ;
+            odrl:operator odrl:or ;
+            odrl:rightOperand (
+                [
+                    a odrl:Constraint ;
+                    odrl:leftOperand odrl:identifierType ;
+                    odrl:operator odrl:eq ;
+                    odrl:rightOperand "ORCID"^^xsd:string
+                ]
+                [
+                    a odrl:Constraint ;
+                    odrl:leftOperand odrl:identifierType ;
+                    odrl:operator odrl:eq ;
+                    odrl:rightOperand "email"^^xsd:string
+                ]
+            )
+        ]
+    ] .
+
+drk:ArchiveEventRepository a odrl:Asset, dct:Collection ;
+    rdfs:label "ArchiveEvent Digital Repository" .
+
+drk:MuenzkabinettMuseum a odrl:Party, foaf:Organization ;
+    rdfs:label "Münzkabinett Museum" .
+
+drk:AuthenticatedUser a odrl:Party ;
+    rdfs:label "Authenticated User" .

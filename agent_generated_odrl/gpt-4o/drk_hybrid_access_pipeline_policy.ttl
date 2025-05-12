@@ -1,0 +1,87 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk: <http://w3id.org/drk/ontology/> .
+
+drk:ClinicalTrialDataAccessPolicy a odrl:Agreement ;
+    dct:title "Clinical Trial Data Access Policy" ;
+    dct:description "Policy governing data access for secondary analysis by HealthAnalytics Corp." ;
+    dct:issued "2023-10-01"^^xsd:date ;
+    
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:read ;
+        odrl:target drk:ClinicalTrialDataset ;
+        odrl:assigner drk:MedResearchInstitute ;
+        odrl:assignee drk:ApprovedDataScientists ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:dateTime ;
+            odrl:operator odrl:lteq ;
+            odrl:rightOperand "PT180D"^^xsd:duration
+        ] ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:fileFormat ;
+            odrl:operator odrl:eq ;
+            odrl:rightOperand "named-in-request-form"^^xsd:string
+        ] ;
+        
+        odrl:duty [
+            a odrl:Duty ;
+            odrl:action odrl:anonymize ;
+            odrl:target drk:AnonymizationPipeline ;
+        ] ;
+        
+        odrl:duty [
+            a odrl:Duty ;
+            odrl:action odrl:approve ;
+            odrl:target drk:EthicsCommittee ;
+        ] ;
+        
+        odrl:duty [
+            a odrl:Duty ;
+            odrl:action odrl:use ;
+            odrl:target drk:SecuredServers ;
+        ] ;
+        
+        odrl:duty [
+            a odrl:Duty ;
+            odrl:action odrl:submit ;
+            odrl:target drk:DerivedFindingsReview ;
+            odrl:constraint [
+                a odrl:Constraint ;
+                odrl:leftOperand odrl:delayPeriod ;
+                odrl:operator odrl:eq ;
+                odrl:rightOperand "P14D"^^xsd:duration
+            ]
+        ]
+    ] .
+
+# Asset definition
+drk:ClinicalTrialDataset a odrl:Asset, dct:Dataset ;
+    rdfs:label "Clinical Trial Dataset" .
+
+drk:AnonymizationPipeline a odrl:Asset ;
+    rdfs:label "Anonymization Pipeline" .
+
+drk:SecuredServers a odrl:Asset ;
+    rdfs:label "Secured Servers" .
+
+drk:DerivedFindingsReview a odrl:Asset ;
+    rdfs:label "Derived Findings Review Process" .
+
+# Party definitions
+drk:MedResearchInstitute a odrl:Party, foaf:Organization ;
+    rdfs:label "MedResearch Institute" .
+
+drk:ApprovedDataScientists a odrl:Party ;
+    rdfs:label "Approved Data Scientists at HealthAnalytics Corp" .
+
+drk:EthicsCommittee a odrl:Party ;
+    rdfs:label "Ethics Committee" .

@@ -1,0 +1,57 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk: <http://w3id.org/drk/ontology/> .
+
+drk:UC4PartnerAccessPolicy a odrl:Offer ;
+    dct:title "UC4 Partner Dataset Access Policy via DRK Connector" ;
+    dct:description "This policy governs access to the UC4 Partner dataset through the DRK Connector platform, with constraints on redistribution time and user location." ;
+    dct:issued "2023-10-01"^^xsd:date ;
+
+    # Permission rule for dataset access
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:use ;
+        odrl:target drk:UC4PartnerDataset ;
+        odrl:assigner drk:DatenRaumkulturProject ;
+        odrl:assignee drk:DRKConnectorPlatform ;
+        
+        # Spatial constraint: users must be located within Germany
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:spatial ;
+            odrl:operator odrl:eq ;
+            odrl:rightOperand "Germany"^^xsd:string
+        ]
+    ] ;
+
+    # Permission rule for redistribution
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:distribute ;
+        odrl:target drk:UC4PartnerDataset ;
+        odrl:assigner drk:DatenRaumkulturProject ;
+        odrl:assignee drk:DRKConnectorPlatform ;
+        
+        # Temporal constraint: redistribution must be before January 1, 2030, at 09:00:01
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:dateTime ;
+            odrl:operator odrl:lt ;
+            odrl:rightOperand "2030-01-01T09:00:01.000Z"^^xsd:dateTime
+        ]
+    ] .
+
+# Asset definition
+drk:UC4PartnerDataset a odrl:Asset, dct:Dataset ;
+    rdfs:label "UC4 Partner Dataset" .
+
+# Party definitions
+drk:DatenRaumkulturProject a odrl:Party, foaf:Organization ;
+    rdfs:label "Daten Raumkultur Project" .
+
+drk:DRKConnectorPlatform a odrl:Party ;
+    rdfs:label "DRK Connector Platform" .

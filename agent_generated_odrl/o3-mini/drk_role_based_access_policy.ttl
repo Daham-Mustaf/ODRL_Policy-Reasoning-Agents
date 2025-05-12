@@ -1,0 +1,47 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk: <http://w3id.org/drk/ontology/> .
+
+drk:CulturalHeritageImagesAccessPolicy a odrl:Agreement ;
+    dct:title "Access Restriction for CulturalHeritageImages2020" ;
+    dct:description "Access to the CulturalHeritageImages2020 dataset is restricted exclusively to researchers who are officially registered participants in the DRK Dataspace program." ;
+    dct:issued "2023-10-01"^^xsd:date ;
+    
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:read ;
+        odrl:target drk:CulturalHeritageImages2020 ;
+        odrl:assigner drk:CulturalHeritageInstitution ;
+        odrl:assignee drk:DRKDataspaceResearcher ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:and (
+                [
+                    a odrl:Constraint ;
+                    odrl:leftOperand odrl:recipient ;
+                    odrl:operator odrl:eq ;
+                    odrl:rightOperand "researcher"^^xsd:string
+                ]
+                [
+                    a odrl:Constraint ;
+                    odrl:leftOperand odrl:recipient ;
+                    odrl:operator odrl:eq ;
+                    odrl:rightOperand "DRKDataspaceParticipant"^^xsd:string
+                ]
+            )
+        ]
+    ] .
+
+drk:CulturalHeritageImages2020 a odrl:Asset, dct:ResourceType ;
+    rdfs:label "CulturalHeritageImages2020 Dataset" .
+
+drk:CulturalHeritageInstitution a odrl:Party, foaf:Organization ;
+    rdfs:label "Cultural Heritage Institution" .
+
+drk:DRKDataspaceResearcher a odrl:Party ;
+    rdfs:label "DRK Dataspace Registered Researcher" .

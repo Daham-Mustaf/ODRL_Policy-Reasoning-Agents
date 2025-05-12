@@ -1,0 +1,32 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk: <http://w3id.org/drk/ontology/> .
+
+drk:ArchiveArtifactAccessOffer a odrl:Offer ;
+    dct:title "ArchiveArtifact Access Offer" ;
+    dct:description "The Münzkabinett Museum permits access to specified ArchiveArtifact datasets only when the declared purpose is an instance of an ArchiveEvent." ;
+    dct:issued "2023-10-04"^^xsd:date ;
+
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:read ;
+        odrl:target drk:ArchiveArtifact ;
+        odrl:assigner drk:MünzkabinettMuseum ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:purpose ;
+            odrl:operator odrl:isA ;
+            odrl:rightOperand "ArchiveEvent"^^xsd:string
+        ]
+    ] .
+
+drk:ArchiveArtifact a odrl:Asset, dct:ResourceType ;
+    rdfs:label "Archive Artifact Dataset" .
+
+drk:MünzkabinettMuseum a odrl:Party, foaf:Organization ;
+    rdfs:label "Münzkabinett Museum" .

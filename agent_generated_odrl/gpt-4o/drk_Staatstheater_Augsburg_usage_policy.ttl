@@ -1,0 +1,46 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk: <http://w3id.org/drk/ontology/> .
+
+drk:ShowTimesAPIAccessPolicy a odrl:Agreement ;
+    dct:title "ShowTimes API Access Policy" ;
+    dct:description "Policy granting access to subscribers including the Culture Research Institute and Cultural Platform Bavaria, limited to Germany, expiring on May 10, 2025." ;
+    dct:issued "2023-10-01"^^xsd:date ;
+    
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:use ;
+        odrl:target drk:ShowTimesAPI ;
+        odrl:assigner drk:DEStaatstheaterAugsburg ;
+        odrl:assignee drk:CultureResearchInstitute,
+                      drk:CulturalPlatformBavaria ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:spatial ;
+            odrl:operator odrl:eq ;
+            odrl:rightOperand "DE"^^xsd:string
+        ] ;
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:dateTime ;
+            odrl:operator odrl:lt ;
+            odrl:rightOperand "2025-05-10T00:00:00.000Z"^^xsd:dateTime
+        ]
+    ] .
+
+drk:ShowTimesAPI a odrl:Asset, dct:Service ;
+    rdfs:label "ShowTimes API" .
+
+drk:DEStaatstheaterAugsburg a odrl:Party, foaf:Organization ;
+    rdfs:label "DE Staatstheater Augsburg" .
+
+drk:CultureResearchInstitute a odrl:Party, foaf:Organization ;
+    rdfs:label "Culture Research Institute" .
+
+drk:CulturalPlatformBavaria a odrl:Party, foaf:Organization ;
+    rdfs:label "Cultural Platform Bavaria" .

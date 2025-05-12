@@ -1,0 +1,64 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk: <http://w3id.org/drk/ontology/> .
+
+drk:RareBooksAccessPolicy a odrl:Agreement ;
+    dct:title "Access Policy for Rare Books Collection" ;
+    dct:description "This policy permits access to the Rare Books Collection dataset with specific constraints on timing and data handling." ;
+    dct:issued "2023-10-01"^^xsd:date ;
+    
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:read ;
+        odrl:target drk:RareBooksCollection ;
+        odrl:assigner drk:CulturalHeritageInstitution ;
+        odrl:assignee drk:Researcher ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:and (
+                [
+                    a odrl:Constraint ;
+                    odrl:leftOperand odrl:dateTime ;
+                    odrl:operator odrl:gteq ;
+                    odrl:rightOperand "2025-06-01T00:00:00.000Z"^^xsd:dateTime
+                ]
+                [
+                    a odrl:Constraint ;
+                    odrl:leftOperand odrl:dateTime ;
+                    odrl:operator odrl:lteq ;
+                    odrl:rightOperand "2026-12-01T00:00:00.000Z"^^xsd:dateTime
+                ]
+            )
+        ] ;
+
+        odrl:duty [
+            a odrl:Duty ;
+            odrl:action odrl:modify ;
+            odrl:target drk:DerivedDataset ;
+            odrl:constraint [
+                a odrl:Constraint ;
+                odrl:leftOperand odrl:purpose ;
+                odrl:operator odrl:eq ;
+                odrl:rightOperand "anonymization"^^xsd:string
+            ]
+        ]
+    ] .
+
+# Asset definition
+drk:RareBooksCollection a odrl:Asset, dct:Dataset ;
+    rdfs:label "Rare Books Collection Dataset" .
+
+# Party definitions
+drk:CulturalHeritageInstitution a odrl:Party, foaf:Organization ;
+    rdfs:label "Cultural Heritage Institution" .
+
+drk:Researcher a odrl:Party ;
+    rdfs:label "Researcher" .
+
+drk:DerivedDataset a odrl:Asset ;
+    rdfs:label "Derived Dataset" .

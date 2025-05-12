@@ -1,0 +1,43 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk: <http://w3id.org/drk/ontology/> .
+
+drk:CulturalHeritageImages2020 a odrl:Asset, dct:Dataset ;
+    rdfs:label "CulturalHeritageImages2020" .
+
+drk:ResearchInstitution a odrl:Party ;
+    rdfs:label "Research Institution" .
+
+drk:DRKDataspaceProgram a odrl:Party ;
+    rdfs:label "DRK Dataspace Program" .
+
+drk:CulturalHeritageImages2020AccessPolicy a odrl:Set ;
+    dct:title "CulturalHeritageImages2020 Access Policy" ;
+    dct:description "Policy to restrict access to CulturalHeritageImages2020" ;
+    dct:issued "2023-10-15"^^xsd:date ;
+
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:read ;
+        odrl:target drk:CulturalHeritageImages2020 ;
+        odrl:assigner drk:DRKDataspaceProgram ;
+        odrl:assignee drk:ResearchInstitution ;
+
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:recipient ;
+            odrl:operator odrl:eq ;
+            odrl:rightOperand "researcher"^^xsd:string
+        ] ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:purpose ;
+            odrl:operator odrl:eq ;
+            odrl:rightOperand "official-researcher"^^xsd:string
+        ]
+    ] .

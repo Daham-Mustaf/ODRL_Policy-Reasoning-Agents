@@ -1,0 +1,36 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk: <http://w3id.org/drk/ontology/> .
+
+drk:DatenRaumkulturAccessPolicy a odrl:Agreement ;
+    dct:title "Daten Raumkultur Access Policy" ;
+    dct:description "This policy permits access to the data through the Daten Raumkultur Connector exclusively for a named UC4 Partner, regardless of how many connector instances they operate." ;
+    dct:issued "2023-10-01"^^xsd:date ;
+
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:read ;
+        odrl:target drk:DatenRaumkulturConnector ;
+        odrl:assigner drk:DataManagementOrganization ; # Fictional placeholder for the assigner's identity
+        odrl:assignee drk:UC4Partner ;
+
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:recipient ;
+            odrl:operator odrl:isA ;
+            odrl:rightOperand "UC4 Partner"^^xsd:string
+        ]
+    ] .
+
+drk:DatenRaumkulturConnector a odrl:Asset, dct:ResourceType ;
+    rdfs:label "Daten Raumkultur Connector" .
+
+drk:DataManagementOrganization a odrl:Party, foaf:Organization ;
+    rdfs:label "Data Management Organization" .
+
+drk:UC4Partner a odrl:Party ;
+    rdfs:label "UC4 Partner" .

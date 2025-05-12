@@ -1,0 +1,36 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk: <http://w3id.org/drk/ontology/> .
+
+drk:CulturalDatasetsAccessOffer a odrl:Offer ;
+    dct:title "Free Access to Selected Cultural Datasets" ;
+    dct:description "The Münzkabinett grants free access to selected cultural datasets only if the purpose of using the data is non-commercial marketing to enhance the institution's visibility." ;
+    dct:issued "2023-10-11"^^xsd:date ;
+    
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:read ;
+        odrl:target drk:SelectedCulturalDatasets ;
+        odrl:assigner drk:Muenzkabinett ;
+        odrl:assignee drk:PublicUser ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:purpose ;
+            odrl:operator odrl:eq ;
+            odrl:rightOperand "non-commercial marketing"^^xsd:string
+        ]
+    ] .
+
+drk:SelectedCulturalDatasets a odrl:Asset, dct:ResourceType ;
+    rdfs:label "Selected Cultural Datasets" .
+
+drk:Muenzkabinett a odrl:Party, foaf:Organization ;
+    rdfs:label "Münzkabinett" .
+
+drk:PublicUser a odrl:Party ;
+    rdfs:label "Public User" .

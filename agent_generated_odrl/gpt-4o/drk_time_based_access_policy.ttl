@@ -1,0 +1,53 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk: <http://w3id.org/drk/ontology/> .
+
+drk:RareBooksDatasetAccessPolicy a odrl:Set ;
+    dct:title "Access to Rare Books Collection Dataset Policy" ;
+    dct:description "Policy governing access and usage of the Rare Books Collection dataset, with temporal constraints and obligations for anonymization." ;
+    dct:issued "2023-10-01"^^xsd:date ;
+
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:use ; # General use action
+        odrl:target drk:RareBooksCollectionDataset ;
+
+        # Temporal constraints
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:dateTime ;
+            odrl:operator odrl:gteq ;
+            odrl:rightOperand "2025-06-01T00:00:00Z"^^xsd:dateTime
+        ] ;
+        
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:dateTime ;
+            odrl:operator odrl:lteq ;
+            odrl:rightOperand "2026-12-01T23:59:59Z"^^xsd:dateTime
+        ] ;
+        
+        # Obligation for anonymization
+        odrl:duty [
+            a odrl:Duty ;
+            odrl:action odrl:modify ;
+            odrl:target drk:DerivedDataset ;
+            odrl:constraint [
+                a odrl:Constraint ;
+                odrl:leftOperand odrl:purpose ;
+                odrl:operator odrl:eq ;
+                odrl:rightOperand "anonymize"^^xsd:string
+            ]
+        ]
+    ] .
+
+# Asset definition
+drk:RareBooksCollectionDataset a odrl:Asset, dct:Dataset ;
+    rdfs:label "Rare Books Collection Dataset" .
+
+drk:DerivedDataset a odrl:Asset, dct:Dataset ;
+    rdfs:label "Derived Dataset" .

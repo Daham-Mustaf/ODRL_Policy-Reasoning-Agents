@@ -1,0 +1,56 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk: <http://w3id.org/drk/ontology/> .
+
+drk:ArchiveEventAccessPolicy a odrl:Agreement ;
+    dct:title "Münzkabinett Museum Archive Event Access Policy" ;
+    dct:description "Policy describes the access rights to the digital repository of Archive Event at the Münzkabinett Museum." ;
+    dct:issued "2023-10-01"^^xsd:date ;
+
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:read ;
+        odrl:target drk:MünzkabinettDigitalRepository ;
+        odrl:assigner drk:MünzkabinettMuseum ;
+        odrl:assignee drk:AuthenticatedUser ;
+
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:recipient ;
+            odrl:operator odrl:isA ;
+            odrl:rightOperand "authenticated-user"^^xsd:string
+        ] ;
+
+        odrl:duty [
+            a odrl:Duty ;
+            odrl:action odrl:register ;
+            odrl:target drk:UserRegistration
+        ]
+    ] ;
+
+    odrl:prohibition [
+        a odrl:Prohibition ;
+        odrl:action odrl:distribute ;
+        odrl:target drk:MünzkabinettDigitalRepository ;
+        odrl:assigner drk:MünzkabinettMuseum ;
+        odrl:assignee drk:UnauthenticatedUser
+    ] .
+
+drk:MünzkabinettDigitalRepository a odrl:Asset, dct:ResourceType ;
+    rdfs:label "Münzkabinett Digital Repository" .
+
+drk:MünzkabinettMuseum a odrl:Party, foaf:Organization ;
+    rdfs:label "Münzkabinett Museum" .
+
+drk:AuthenticatedUser a odrl:Party ;
+    rdfs:label "Authenticated User" .
+
+drk:UnauthenticatedUser a odrl:Party ;
+    rdfs:label "Unauthenticated User" .
+
+drk:UserRegistration a odrl:Asset ;
+    rdfs:label "User Registration for Access" .

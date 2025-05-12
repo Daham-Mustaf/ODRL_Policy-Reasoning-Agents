@@ -1,0 +1,89 @@
+# Virtual Environment
+.venv/
+venv/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# OS specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+.project
+.pydevproject
+.settings/
+
+# Logs
+*.log
+logs/
+log/
+
+# Environment variables and secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+
+# API keys and sensitive data
+config.ini
+credentials.json
+secrets.json
+api_keys.py
+
+# Output directories that might contain sensitive data
+validation_reports/
+reasoning_results/
+
+# Large data files
+*.csv
+*.json
+*.jsonl
+*.txt
+!requirements.txt
+Data/
+
+# Temporary files
+*.bak
+*.tmp
+.*.tmp
+*~
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# LLM specific
+model_cache/
+embeddings/
+vector_store/

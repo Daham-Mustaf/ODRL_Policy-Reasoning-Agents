@@ -1,0 +1,48 @@
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix drk: <http://w3id.org/drk/ontology/> .
+
+drk:ArchiveEventAccessPolicy a odrl:Agreement ;
+    dct:title "Archive Event Access Policy" ;
+    dct:description "Policy for accessing the digital repository of Archive Event" ;
+    dct:issued "2022-10-15"^^xsd:date ;
+    
+    # Permission rule for viewing and downloading
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action odrl:read, odrl:download ;
+        odrl:target drk:ArchiveEvent ;
+        odrl:assigner drk:Munzkabinett ;
+        odrl:assignee drk:AuthenticatedUser ;
+
+        # Constraint for user authentication
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:recipient ;
+            odrl:operator odrl:isA ;
+            odrl:rightOperand "authenticated-user"^^xsd:string
+        ] ;
+
+        # Constraint for user registration
+        odrl:constraint [
+            a odrl:Constraint ;
+            odrl:leftOperand odrl:recipient ;
+            odrl:operator odrl:isA ;
+            odrl:rightOperand "registered-user"^^xsd:string
+        ]
+    ] .
+
+# Asset definition
+drk:ArchiveEvent a odrl:Asset, dct:Dataset ;
+    rdfs:label "Archive Event" .
+
+# Party definitions
+drk:Munzkabinett a odrl:Party, foaf:Organization ;
+    rdfs:label "Münzkabinett museum" .
+
+drk:AuthenticatedUser a odrl:Party ;
+    rdfs:label "Authenticated User" .
