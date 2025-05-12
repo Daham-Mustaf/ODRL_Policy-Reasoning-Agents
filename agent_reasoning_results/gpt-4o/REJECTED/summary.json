@@ -1,0 +1,8 @@
+{
+  "model_name": "gpt-4o",
+  "total_policies": 20,
+  "approved_count": 1,
+  "rejected_count": 19,
+  "expected_decision": "REJECTED",
+  "rethinking_enabled": false
+}

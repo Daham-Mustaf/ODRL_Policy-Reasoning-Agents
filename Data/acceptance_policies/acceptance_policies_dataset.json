@@ -1,0 +1,138 @@
+[
+    {
+        "policy_id": "drk_connector_based_access_policy",
+        "policy_text": "Access to the dataset titled 'MuseumArtifact' is permitted only to approved dataspace participants(UC4) operating through authorized connectors. Only participants using connector endpoints registered as '?connector1URI' are allowed to use the data.",
+        "expected_outcome": "APPROVED",
+        "acceptance_category": "technical_constraint_policy",
+        "acceptance_reason": "Policy clearly defines specific technical requirements for access",
+        "acceptance_reasoning_detailed": "This policy establishes clear technical constraints that are measurable and enforceable. It specifies who can access the data (approved participants) and through what technical means (authorized connectors with specific endpoint IDs), making implementation straightforward without contradictions."
+    },
+    {
+        "policy_id": "drk_role_based_access_policy",
+        "policy_text": "Access to the dataset titled 'CulturalHeritageImages2020' is restricted exclusively to researchers who are officially registered participants in the DRK Dataspace program.",
+        "expected_outcome": "APPROVED",
+        "acceptance_category": "role_constraint_policy",
+        "acceptance_reason": "Policy specifies a clear role requirement with specific eligibility criteria",
+        "acceptance_reasoning_detailed": "This policy defines both the protected asset (CulturalHeritageImages2020) and the specific role requirement (registered researchers) necessary for access. The role has a clear verification mechanism (official registration in the DRK Dataspace program), making this policy implementable without ambiguity."
+    },
+    {
+        "policy_id": "drk_time_based_access_policy",
+        "policy_text": "Access to the dataset titled 'RareBooksCollection' is permitted only between June 1, 2025, and December 1, 2026. Participants must replace the name field in any derived dataset with anonymized values.",
+        "expected_outcome": "APPROVED",
+        "acceptance_category": "temporal_constraint_policy",
+        "acceptance_reason": "Policy defines exact dates and specific data transformation requirements",
+        "acceptance_reasoning_detailed": "This policy contains measurable temporal constraints with precise start and end dates for access permission. It also includes a specific data handling obligation (name field anonymization) that is clearly defined and implementable. There are no contradictions or ambiguities in the time window or requirements."
+    },
+    {
+        "policy_id": "drk_purpose_limted_access_policy",
+        "policy_text": "The dataset 'OralTraditionsArchive' may be used only for educational purposes. Commercial use is strictly prohibited.",
+        "expected_outcome": "APPROVED",
+        "acceptance_category": "purpose_constraint_policy",
+        "acceptance_reason": "Policy clearly defines permitted and prohibited usage purposes",
+        "acceptance_reasoning_detailed": "This policy states a specific dataset and establishes clear boundaries for its use through both a positive permission (educational purposes) and an explicit prohibition (commercial use). These categories are standard in data usage agreements and can be interpreted consistently without contradiction."
+    },
+    {
+        "policy_id": "drk_digitization_fee_policy",
+        "policy_text": "The Münzkabinett Museum must pay a fee of 500 euros for the digitization of the 'Todestag' artwork.",
+        "expected_outcome": "APPROVED",
+        "acceptance_category": "financial_obligation_policy",
+        "acceptance_reason": "Policy specifies exact payment amount, parties, and service",
+        "acceptance_reasoning_detailed": "This policy defines a clear financial obligation with specific elements: the obligated party (Münzkabinett Museum), the exact amount (500 euros), and the specific service (digitization of 'Todestag' artwork). All terms are measurable and enforceable without ambiguity."
+    },
+    {
+        "policy_id": "drk_purpose_based_no_fee_policy",
+        "policy_text": "The Münzkabinett grants free access to selected cultural datasets Only if the purpose of using the data is non-commercial marketing to enhance the institution's visibility.",
+        "expected_outcome": "APPROVED",
+        "acceptance_category": "conditional_access_policy",
+        "acceptance_reason": "Policy links specific access condition to clearly defined purpose",
+        "acceptance_reasoning_detailed": "This policy establishes a clear conditional relationship between access terms (free access) and a specific usage purpose (non-commercial marketing for institutional visibility). The condition is specific enough to be verifiable in implementation without ambiguity."
+    },
+    {
+        "policy_id": "drk_purpose_archive_event_policy",
+        "policy_text": "The Münzkabinett Museum permits access to specified datasets(ArchiveArtifact) only when the declared purpose is an instance of an ArchiveEvent.",
+        "expected_outcome": "APPROVED",
+        "acceptance_category": "semantic_class_constraint_policy",
+        "acceptance_reason": "Policy uses well-defined semantic class constraints for purpose limitation",
+        "acceptance_reasoning_detailed": "This policy establishes access control based on declared purpose matching a specific semantic class (ArchiveEvent). This type of constraint is precise and verifiable in implementation through semantic classification of the declared purpose."
+    },
+    {
+        "policy_id": "drk_redistribution_geo_policy",
+        "policy_text": "The Daten Raumkultur project offered access to the 'UC4 Partner' dataset via the DRK Connector platform. Redistribution was only permitted before January 1, 2030, at 09:00:01. Furthermore, dataset access is restricted to users located within Germany.",
+        "expected_outcome": "APPROVED",
+        "acceptance_category": "multi_constraint_policy",
+        "acceptance_reason": "Policy combines temporal and geographic constraints without contradictions",
+        "acceptance_reasoning_detailed": "This policy integrates multiple constraint types (temporal deadline, geographic limitation) that are each specific and measurable. The future date (2030) is valid for the current date (2025), and the geographic constraint (Germany) is clearly defined without hierarchical contradictions."
+    },
+    {
+        "policy_id": "drk_view_limit_policy",
+        "policy_text": "The Daten Raumkultur connector allows UC4 partners to view a maximum of 50 images per day. This restriction is in place to maintain limited access to the dataset.",
+        "expected_outcome": "APPROVED",
+        "acceptance_category": "quantitative_limit_policy",
+        "acceptance_reason": "Policy sets clear numerical usage limit with specific time period",
+        "acceptance_reasoning_detailed": "This policy establishes a precise quantitative limitation (50 images) with a clear time period (per day). Both the quantity and time frame are measurable, making this policy straightforward to implement and enforce without ambiguity."
+    },
+    {
+        "policy_id": "drk_uc4_partner_connector_flex",
+        "policy_text": "This policy permits access to the data through the Daten Raumkultur Connector exclusively for a named UC4 Partner, regardless of how many connector instances they operate. No additional restrictions apply to their use.",
+        "expected_outcome": "APPROVED",
+        "acceptance_category": "exclusive_access_policy",
+        "acceptance_reason": "Policy defines exclusive access rights with clear scope statement",
+        "acceptance_reasoning_detailed": "This policy establishes exclusive access rights to a specific actor (named UC4 Partner) through defined technical means (Daten Raumkultur Connector). It also explicitly clarifies that connector instance count is not a limitation, preventing potential ambiguity in implementation."
+    },
+    {
+        "policy_id": "drk_uc4_limited_use_policy",
+        "policy_text": "The Daten Raumkultur project (http://w3id.org/drk/ontology/) offers a contract for accessing the dataset (http://w3id.org/drk/ontology/d1234), permitting a named UC4 Partner to use the dataset up to 30 times.",
+        "expected_outcome": "APPROVED",
+        "acceptance_category": "usage_count_policy",
+        "acceptance_reason": "Policy specifies exact numerical usage limit",
+        "acceptance_reasoning_detailed": "This policy establishes a precise quantitative usage limitation (30 times) with specifically identified subjects (named UC4 Partner) and objects (identified dataset with URI). The limitation is clearly measurable and enforceable in implementation."
+    },
+    {
+        "policy_id": "drk_uc4_anonymized_image_data_policy",
+        "policy_text": "The Daten Raumkultur project (http://w3id.org/drk/ontology/) grants the UC4 Partner access to the image dataset (http://w3id.org/drk/ontology/d1234) for the purpose of training and evaluation only. However, the dataset must be anonymized before usage to ensure the privacy of any individuals represented in the data.",
+        "expected_outcome": "APPROVED",
+        "acceptance_category": "data_transformation_policy",
+        "acceptance_reason": "Policy requires specific data transformation with clear privacy purpose",
+        "acceptance_reasoning_detailed": "This policy establishes both purpose limitations (training and evaluation only) and specific data handling requirements (anonymization). The privacy requirement is clearly defined with a specific objective (removing identifiable information) and applies to a well-defined processing context."
+    },
+    {
+        "policy_id": "drk_Staatstheater_Augsburg_usage_policy",
+        "policy_text": "The DE_Staatstheater_Augsburg, a prominent German cultural institution, manages the 'ShowTimesAPI', which provides access to valuable cultural assets. The policy governing this API grants access to Staatstheater_Augsburg's subscribers, including the 'Culture Research Institute', and 'Cultural Platform Bavaria'. Usage is limited to Germany, and the rights to access will expire on May 10, 2025.",
+        "expected_outcome": "APPROVED",
+        "acceptance_category": "multi_dimension_access_policy",
+        "acceptance_reason": "Policy defines actors, geographic scope, and expiration date clearly",
+        "acceptance_reasoning_detailed": "This policy specifies multiple dimensions of access control: authorized actors (named subscribers), geographic scope (Germany), and temporal limitation (expiration date). All constraints are specific and measurable, and the expiration date (May 10, 2025) is in the future relative to the current date (May 7, 2025)."
+    },
+    {
+        "policy_id": "drk_skulpturensammlung_public_access_policy",
+        "policy_text": "The Skulpturensammlung museum wants to provide public access to digital reproductions of the artwork 'Große Düne' by C. D. Friedrich. Museum Münzkabinett and are permitted to view and download digital images for sharing and non-commercial use.",
+        "expected_outcome": "APPROVED",
+        "acceptance_category": "public_access_policy",
+        "acceptance_reason": "Policy defines specific assets, actions, and usage limitations",
+        "acceptance_reasoning_detailed": "This policy clearly identifies the protected asset (digital reproductions of 'Große Düne'), permitted actions (view, download, share), and usage limitations (non-commercial use). These terms establish clear boundaries for implementation without ambiguity."
+    },
+    {
+        "policy_id": "drk_staatstheater_augsburg_educational_program_policy",
+        "policy_text": "The DE_Staatstheater_Augsburg collaborates with a local university for an educational program on theater history and cultural heritage. They offer access to the 'HistoricalArchives' Asset, containing digitized historical data. Access is free for scientific research, enabling scholars to explore the dataset without fees.",
+        "expected_outcome": "APPROVED",
+        "acceptance_category": "purpose_based_fee_waiver_policy",
+        "acceptance_reason": "Policy links fee structure to specific purpose with clear beneficiaries",
+        "acceptance_reasoning_detailed": "This policy establishes a conditional relationship between access terms (free access) and a specific purpose (scientific research). It clearly identifies the asset ('HistoricalArchives'), the beneficiaries (scholars), and the financial arrangement (no fees), creating an unambiguous implementation framework."
+    },
+    {
+        "policy_id": "drk_munzkabinett_authenticated_access_policy",
+        "policy_text": "The Münzkabinett museum provides access to a digital repository of ArchiveEvent. Users must register with a valid user ID, which can be either an ORCID or an email address, to access the repository. The policy ensures that only authenticated users can view and download the ArchiveEvent.",
+        "expected_outcome": "APPROVED",
+        "acceptance_category": "authentication_requirement_policy",
+        "acceptance_reason": "Policy specifies clear authentication mechanisms and requirements",
+        "acceptance_reasoning_detailed": "This policy establishes specific authentication requirements with accepted credential types (ORCID or email) and a clear registration process. It defines both the protected asset (ArchiveEvent repository) and permitted actions (view, download) contingent on authentication, creating a complete and implementable access control framework."
+    },
+    {
+        "policy_id": "drk_hybrid_access_pipeline_policy",
+        "policy_text": "Research data from clinical trials conducted by MedResearch Institute can be accessed by approved data scientists at HealthAnalytics Corp for secondary analysis, but only after: 1) all personal identifiers are removed through the institute's anonymization pipeline, 2) a formal data request is approved by the Ethics Committee, 3) analysis is conducted only on secured servers provided by MedResearch, and 4) any derived findings must be submitted for review 14 days before publication. Access is granted for 180 days from approval date and is limited to datasets explicitly named in the request form.",
+        "expected_outcome": "APPROVED",
+        "acceptance_category": "complex_multi_stage_policy",
+        "acceptance_reason": "Policy defines comprehensive workflow with clear sequential requirements",
+        "acceptance_reasoning_detailed": "This policy establishes a sophisticated multi-stage workflow with precise requirements at each stage. It includes data transformation (anonymization), approval process (Ethics Committee), technical constraints (secured servers), follow-up obligations (pre-publication review), and temporal limitations (180 days access). All elements are specific and measurable, and while complex, there are no contradictions between the requirements."
+    }
+]

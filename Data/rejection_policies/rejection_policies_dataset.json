@@ -1,0 +1,204 @@
+[
+    {
+       "policy_id":"drk_universal_access_policy",
+       "policy_text":"Everyone can access everything.",
+       "expected_outcome": "REJECTED",
+       "rejection_category":"overly_broad_policy",
+       "rejection_category_description":"Policy uses extremely vague terms without specific actors, assets, or constraints",
+       "specific_contradiction":"Policy lacks definition of actors, assets, and access limitations necessary for implementation",
+       "recommendation":"Define specific actors, assets, access types, and appropriate constraints",
+       "rejection_reason_detailed":"The policy uses universally quantified terms ('everyone', 'everything') without any specificity, making it impossible to implement in practice. A real-world system cannot grant unlimited access to all assets without violating basic security principles, privacy requirements, and regulatory constraints. The policy needs to define who can access what resources, under what conditions, and with what limitations."
+    },
+    {
+        "policy_id": "drk_ambiguous_condition_policy",
+        "policy_text": "If researchers submit access requests for restricted manuscripts, then curators will review the request. If the request is approved, users can download high-resolution images. If the request is urgent, it will be expedited.",
+        "expected_outcome": "REJECTED",
+        "rejection_category": "conditional_ambiguity",
+        "specific_contradiction": "Policy fails to define what constitutes an 'urgent' request, leaving a critical decision point unmeasurable",
+        "recommendation": "Define specific, measurable criteria for what qualifies as an 'urgent' request (e.g., needed within 48 hours, required for pending publication)",
+        "rejection_reason_detailed": "The policy contains an unmeasurable condition ('urgent') that affects processing priority. Without specific criteria for urgency, implementation would be inconsistent and subjective. The policy should define measurable criteria for classifying requests as urgent to ensure consistent handling."
+    },
+    {
+       "policy_id":"drk_temporal_music_contradiction",
+       "policy_text":"The track is available only after 2025, but it can also be used in 2024 for educational purposes.",
+       "expected_outcome": "REJECTED",
+       "rejection_category":"temporal_conflict",
+       "reason":"Contradictory availability and usage periods.",
+       "contradiction":"Use in 2024 contradicts availability set for 2025.",
+       "recommendation":"Align usage windows across all policy conditions.",
+       "detailed_reasoning":"Music content cannot be legally accessed before its release window, even for limited-use cases."
+    },
+    {
+       "policy_id":"drk_universal_access_music_policy",
+       "policy_text":"Everyone can access all music files in the archive.",
+       "expected_outcome": "REJECTED",
+       "rejection_category":"overly_broad_policy",
+       "reason":"Uses vague terms with no specific actors, assets, or constraints.",
+       "contradiction":"Lacks definitions necessary for implementation.",
+       "recommendation":"Define user roles, specific music files, access types (e.g., streaming, download), and usage constraints.",
+       "detailed_reasoning":"Universal access policies without qualification risk violating copyright and licensing agreements in the music domain."
+    },
+    {
+       "policy_id":"drk_universal_prohibition_policy",
+       "policy_text":"Nobody can do anything.",
+       "expected_outcome": "REJECTED",
+       "rejection_category":"overly_broad_policy",
+       "rejection_category_description":"Policy uses extremely vague universal quantifiers without specific actors, assets, or constraints",
+       "specific_contradiction":"Policy creates a universal prohibition that lacks definition of specific actors, actions, and assets necessary for implementation",
+       "recommendation":"Define specific actors, assets, restricted actions, and appropriate scope limitations",
+       "rejection_reason_detailed":"The policy uses universally negative quantifiers ('nobody', 'anything') without any specificity, making it impractical to implement. It creates a blanket prohibition that would effectively block all operations and activities within a system. The policy needs to specify which particular actors are prohibited from performing which specific actions on which defined assets, under what conditions, and with what exceptions for the policy to be practically implementable."
+    },
+    {
+      "policy_id": "contradictory_geo_scope_policy",
+      "policy_text": "The Cultural Heritage API grants access to the Medieval Collection for researchers located in Germany. At the same time, the system must strictly prohibit all access to the Medieval Collection for ALL researchers within the European Union.",
+      "expected_outcome": "REJECTED",
+      "rejection_category": "hierarchical_location_contradiction",
+      "specific_contradiction": "Germany is explicitly stated to be within the European Union, creating a direct geographical contradiction where access must be both granted and denied to the same researchers",
+      "recommendation": "Resolve the geographical contradiction by either exempting Germany from the EU restriction or by changing the policy to be consistent across locations",
+      "rejection_reason_detailed": "The policy creates a logically impossible implementation by explicitly stating that researchers in Germany must be granted access while simultaneously stating that all EU researchers (which explicitly includes Germany) must be denied access. This direct contradiction makes it impossible to determine whether a German researcher should be granted or denied access."
+    },
+    {
+       "policy_id":"overlapping_time_windows_policy",
+       "policy_text":"Museum staff can access the Digital Asset Management System between 9:00 AM and 5:00 PM local time for daily operations. Database maintenance is scheduled daily between 2:00 PM and 6:00 PM, during which all staff access is prohibited. Emergency access is granted to IT administrators at all times without restriction.",
+       "expected_outcome": "REJECTED",
+       "rejection_category":"temporal_access_contradiction",
+       "specific_contradiction":"Policy states staff can access between 9:00 AM-5:00 PM but also prohibits access between 2:00 PM-6:00 PM, creating an overlapping period (2:00-5:00 PM) with contradictory rules",
+       "recommendation":"Adjust either the staff access window or maintenance window to eliminate the overlap, or explicitly state which rule takes precedence during the overlapping period",
+       "rejection_reason_detailed":"The policy creates a direct temporal contradiction by allowing staff access between 9:00 AM and 5:00 PM while simultaneously prohibiting access between 2:00 PM and 6:00 PM. This creates a 3-hour window (2:00-5:00 PM) where both rules apply but contradict each other, making implementation impossible without additional rule precedence information."
+    },
+    {
+       "policy_id":"circular_approval_dependency_policy",
+       "policy_text":"External researchers may access the Historical Manuscripts Archive only after receiving approval from the Archives Committee. The Archives Committee may grant access only after reviewing the researcher's publication history, which must be verified by the Digital Rights Department. The Digital Rights Department may only perform verification after the researcher has been granted preliminary access to submit their credentials through the Archive Access Portal.",
+       "expected_outcome": "REJECTED",
+       "rejection_category":"circular_dependency_contradiction",
+       "specific_contradiction":"Creates an impossible approval flow: researchers need Archives Committee approval → which requires Digital Rights verification → which requires preliminary access → which requires Archives Committee approval",
+       "recommendation":"Break the circular dependency by allowing credential submission without preliminary access or by establishing a clear starting point in the approval process",
+       "rejection_reason_detailed":"The policy creates a circular dependency in its access approval process that makes implementation impossible. Researchers need Archives Committee approval, which requires Digital Rights Department verification, which requires preliminary access, which itself requires Archives Committee approval. This creates a logical loop where none of the steps can be initiated because each depends on the completion of steps that come after it."
+    },
+    {
+       "policy_id":"contradictory_retention_policy",
+       "policy_text":"To comply with GDPR, all personal data must be deleted within 30 days of a user's account cancellation. For legal compliance with financial regulations, all transaction records including user identification details must be retained for 7 years. The system must maintain complete user activity logs including all transactions in a single consolidated database that preserves referential integrity across all tables.",
+       "expected_outcome": "REJECTED",
+       "rejection_category":"legal_compliance_contradiction",
+       "specific_contradiction":"Policy requires deleting personal data after 30 days while simultaneously requiring retention of the same data for 7 years, with an additional requirement for database referential integrity",
+       "recommendation":"Implement data pseudonymization or create separate databases with different retention policies while maintaining necessary audit capabilities",
+       "rejection_reason_detailed":"The policy creates a direct contradiction between two legal compliance requirements that cannot be simultaneously satisfied. It mandates deletion of personal data within 30 days while requiring retention of that same data for 7 years, with an additional technical constraint of maintaining referential integrity. Without additional provisions for data transformation or separation, this policy is impossible to implement while maintaining compliance with both requirements."
+    },
+    {
+       "policy_id":"drk_technical_impossibility_policy",
+       "policy_text":"All digital artifacts in the DRK Cultural Heritage repository must be simultaneously encrypted with AES-256 for security and stored as plaintext to enable full-text indexing. The system must maintain a single copy of each file that satisfies both requirements without any transformation during retrieval.",
+       "expected_outcome": "REJECTED",
+       "rejection_category":"technical_feasibility_contradiction",
+       "specific_contradiction":"Policy requires digital artifacts to be both fully encrypted AND stored as plaintext in a single file version, which is technically impossible",
+       "recommendation":"Implement a dual-storage approach with encrypted archives and separate indexed content, or use searchable encryption techniques despite their performance limitations",
+       "rejection_reason_detailed":"The policy contains technically incompatible requirements that cannot be simultaneously satisfied. A file cannot be both fully encrypted (making its content unreadable without decryption) and stored as plaintext (readable without transformation) in a single version. This creates an implementation impossibility as encryption and plaintext storage are mutually exclusive states for the same digital artifact."
+    },
+    {
+       "policy_id":"drk_incomplete_condition_policy",
+       "policy_text":"Museum curators may approve or deny requests to reproduce images from the Digital Cultural Heritage Collection. Requests approved by curators will be forwarded to the Rights Management Department for processing.",
+       "expected_outcome": "REJECTED",
+       "rejection_category":"incomplete_condition_handling",
+       "specific_contradiction":"Policy specifies the workflow for approved requests but completely omits handling procedures for denied requests",
+       "recommendation":"Define complete handling for all possible outcomes including denied requests, specifying notification procedures and resubmission options",
+       "rejection_reason_detailed":"The policy fails to address a complete set of conditions by specifying procedures only for approved requests while providing no guidance on handling denied requests. This creates an implementation gap as the system would not know how to process denial cases (e.g., whether to notify requesters, provide reasons, allow appeals, or archive the denied requests). Without handling all possible conditions, the policy cannot be consistently implemented."
+    },
+    {
+       "policy_id":"drk_uc4_conflicting_use_policy",
+       "policy_text":"The Daten Raumkultur project (http://w3id.org/drk/ontology/) offers a contract for accessing the dataset (http://w3id.org/drk/ontology/d1234), permitting the named UC4 Partner to use the dataset up to 30 times. However, the same policy also permits the UC4 Partner to access the dataset without any usage limitations.",
+       "expected_outcome": "REJECTED",
+       "rejection_category":"usage_limit_contradiction",
+       "rejection_category_description":"Policy contains contradictory statements about usage limits",
+       "specific_contradiction":"Policy simultaneously limits usage to 30 times AND permits unlimited usage",
+       "recommendation":"Resolve by selecting either limited (30) or unlimited access",
+       "rejection_reason_detailed":"The policy contains mutually exclusive requirements regarding usage limits. It first states a specific limit (30 times) but then contradicts this by allowing unlimited access. This creates an implementation impossibility as both conditions cannot be satisfied simultaneously."
+    },
+    {
+       "policy_id":"drk_uc4_time_conflict",
+       "policy_text":"The Daten Raumkultur project (http://w3id.org/drk/ontology/) permits UC4 Partner to use the dataset (http://w3id.org/drk/ontology/d1234) only until January 1, 2025. However, the policy also allows UC4 Partner to access the dataset indefinitely, without an expiration date.",
+       "expected_outcome": "REJECTED",
+       "rejection_category":"time_constraint_contradiction",
+       "rejection_category_description":"Policy contains contradictory statements about time constraints",
+       "specific_contradiction":"Policy limits access until January 1, 2025 BUT also allows indefinite access",
+       "recommendation":"Clarify whether access expires on a specific date or is perpetual",
+       "rejection_reason_detailed":"The policy creates a logical contradiction regarding access duration. It defines a specific end date (January 1, 2025) while simultaneously granting indefinite access with no expiration. These two conditions cannot be reconciled within a single policy."
+    },
+    {
+       "policy_id":"drk_uc4_actor_conflict",
+       "policy_text":"The Daten Raumkultur project (http://w3id.org/drk/ontology/) grants access to the dataset (http://w3id.org/drk/ontology/d1234) for UC4 Partner only. However, the policy also permits access to the dataset for any registered user, not just UC4 Partner.",
+       "expected_outcome": "REJECTED",
+       "rejection_category":"actor_permission_contradiction",
+       "rejection_category_description":"Policy contains contradictory statements about which actors have permission",
+       "specific_contradiction":"Policy restricts access to UC4 Partner ONLY BUT also permits all registered users",
+       "recommendation":"Define a single access control group (either exclusive or inclusive)",
+       "rejection_reason_detailed":"The policy creates a logical contradiction in actor permissions. It first restricts access to only the UC4 Partner, then expands access to any registered user. This makes the policy unimplementable as the access control cannot simultaneously be both exclusive and inclusive."
+    },
+    {
+       "policy_id":"drk_location_conflict_policy",
+       "policy_text":"Access to the 'Cultural Heritage Dataset' is granted exclusively within Germany, for approved researchers. However, access is prohibited in all locations outside of Germany, including all European countries. This creates a conflict as the dataset is accessible in Germany but completely restricted across Europe, which contradicts the expected availability within the European Union.",
+       "expected_outcome": "REJECTED",
+       "rejection_category":"geographic_contradiction",
+       "rejection_category_description":"Policy contains contradictory statements about geographic access",
+       "specific_contradiction":"Access granted exclusively within Germany BUT prohibited across Europe (contradictory since Germany is in Europe)",
+       "recommendation":"Clarify geographic boundaries with non-overlapping regions",
+       "rejection_reason_detailed":"The policy contains a logical geographic inconsistency. It states that access is granted in Germany but prohibited in all European countries. Since Germany is part of Europe, this creates an irreconcilable contradiction in the policy's geographic scope."
+    },
+    {
+       "policy_id":"drk_action_conflict_policy",
+       "policy_text":"Researchers can modify metadata in the Cultural Heritage Dataset for academic purposes. any metadata must not modify in the Cultural Heritage Dataset.",
+       "expected_outcome": "REJECTED",
+       "rejection_category":"action_permission_contradiction",
+       "rejection_category_description":"Policy contains contradictory statements about allowed actions",
+       "specific_contradiction":"Allows researchers to modify metadata BUT also prohibits any metadata modification",
+       "recommendation":"Clearly specify which actors can modify metadata under what conditions",
+       "rejection_reason_detailed":"The policy creates a direct contradiction by first permitting a specific action (metadata modification by researchers) and then categorically prohibiting the same action. This makes the policy impossible to implement as both conditions cannot be satisfied."
+    },
+    {
+      "policy_id":"drk_role_conflict_policy",
+      "policy_text":"Access to the 'Cultural Heritage Dataset' is granted to all researchers for academic purposes. All managers must have full access to this dataset at all times to monitor research activities. All administrators are strictly prohibited from accessing this dataset under any circumstances. According to the organizational structure, all managers are also classified as administrators in the system.",
+      "expected_outcome": "REJECTED",
+      "rejection_category":"role_hierarchy_contradiction",
+      "rejection_category_description":"Policy creates direct contradictions between hierarchical roles",
+      "specific_contradiction":"The policy creates an implementation impossibility by mandating that managers must have full access while simultaneously prohibiting all administrators from access, despite explicitly stating that all managers are also administrators",
+      "recommendation":"Resolve the role hierarchy contradiction by either: (1) exempting managers from the administrator prohibition, (2) removing the contradiction between roles, or (3) defining clear precedence rules for conflicting access rights",
+      "rejection_reason_detailed":"This policy creates a direct role hierarchy implementation impossibility. It explicitly states that all managers must have full access to the dataset, while simultaneously prohibiting all administrators from accessing it. The policy then explicitly defines that all managers are also administrators in the system. This creates a logically impossible situation where the same individuals (managers who are all classified as administrators) both must have access and must not have access to the same dataset. There is no possible implementation that could satisfy both requirements for these individuals."
+    },
+    {
+       "policy_id":"drk_redistribution_policy",
+       "policy_text":"The Daten Raumkultur project offered access to the 'UC4 Partner' dataset via the DRK Connector platform. Redistribution is permitted only for the UC4 Partner and only until January 1, 2020, at 09:00:01.",
+       "expected_outcome": "REJECTED",
+       "rejection_category":"expired_time_condition",
+       "rejection_category_description":"Policy contains time conditions that have already expired- positive policy",
+       "specific_contradiction":"Redistribution permitted only until January 1, 2020 (current date: May 6, 2025)",
+       "recommendation":"Either update the expiration date or remove/archive the policy",
+       "rejection_reason_detailed":"The policy includes a time condition that has already passed (January 1, 2020), making the policy expired and no longer applicable. Since the current date is May 6, 2025, this policy should be rejected as it can no longer be enforced."
+    },
+    {
+       "policy_id":"drk_redistribution_expired_policy",
+       "policy_text":"The Daten Raumkultur project offered access to the 'UC4 Partner' dataset via the DRK Connector platform. Redistribution was only permitted before January 1, 2020, at 09:00:01, and is no longer allowed.",
+       "expected_outcome": "REJECTED",
+       "rejection_category":"expired_time_condition",
+       "rejection_category_description":"Policy contains time conditions that have already expired",
+       "specific_contradiction":"Redistribution permitted only before January 1, 2020 (current date: May 6, 2025)",
+       "recommendation":"Either update the expiration date or remove/archive the policy",
+       "rejection_reason_detailed":"The policy includes a time condition that has already passed (January 1, 2020), making the policy expired and no longer applicable. Since the current date is May 6, 2025, this policy should be rejected as it can no longer be enforced."
+    },
+    {
+       "policy_id":"drk_music_platform_expired_policy",
+       "policy_text":"The Music Platform project offered access to the 'DRK' data API via the Mimo platform. Redistribution was permitted only before January 1, 2020, at 09:00:01.",
+       "expected_outcome": "REJECTED",
+       "rejection_category":"expired_time_condition",
+       "rejection_category_description":"Policy contains time conditions that have already expired- negative policy",
+       "specific_contradiction":"Redistribution permitted only before January 1, 2020 (current date: May 6, 2025)",
+       "recommendation":"Either update the expiration date or remove/archive the policy",
+       "rejection_reason_detailed":"The policy includes a time condition that has already passed (January 1, 2020), making the policy expired and no longer applicable. Since the current date is May 6, 2025, this policy should be rejected as it can no longer be enforced."
+    },
+    {
+        "policy_id": "drk_resource_constraint_contradiction",
+        "policy_text": "The Cultural Heritage Digital Repository must process all image processing requests within 5 seconds while performing full 8K resolution conversion, lossless compression, and AI-based analysis on each file. The system must operate on standard consumer hardware without dedicated GPUs.",
+        "expected_outcome": "REJECTED",
+        "rejection_category": "resource_constraint_contradiction",
+        "specific_contradiction": "Policy requires computationally intensive operations (8K conversion, lossless compression, AI analysis) within 5 seconds on limited hardware (no GPUs)",
+        "recommendation": "Either extend the processing time requirement, reduce the processing requirements, or specify appropriate hardware resources",
+        "rejection_reason_detailed": "The policy creates technically infeasible requirements by demanding computationally intensive operations within an unrealistic timeframe on inadequate hardware. The combination of 8K resolution processing, lossless compression, AI analysis, 5-second performance requirement, and hardware limitations creates a set of mutually exclusive constraints that cannot be simultaneously satisfied with current technology."
+    }
+ ]

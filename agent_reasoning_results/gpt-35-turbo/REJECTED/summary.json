@@ -1,0 +1,8 @@
+{
+  "model_name": "gpt-35-turbo",
+  "total_policies": 20,
+  "approved_count": 5,
+  "rejected_count": 15,
+  "expected_decision": "REJECTED",
+  "rethinking_enabled": false
+}

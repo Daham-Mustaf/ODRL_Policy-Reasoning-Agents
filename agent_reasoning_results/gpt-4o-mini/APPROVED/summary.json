@@ -1,0 +1,8 @@
+{
+  "model_name": "gpt-4o-mini",
+  "total_policies": 17,
+  "approved/reviewed_count": 0,
+  "rejected_count": 0,
+  "expected_decision": "APPROVED",
+  "rethinking_enabled": false
+}

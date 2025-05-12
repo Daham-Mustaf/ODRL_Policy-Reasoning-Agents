@@ -72,7 +72,7 @@ reasoning_results/
 *.jsonl
 *.txt
 !requirements.txt
-Data/
+!Data/
 
 # Temporary files
 *.bak

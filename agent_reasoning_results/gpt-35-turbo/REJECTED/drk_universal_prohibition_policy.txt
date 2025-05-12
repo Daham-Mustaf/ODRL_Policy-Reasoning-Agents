@@ -1,0 +1,51 @@
+# Policy Analysis: drk_universal_prohibition_policy
+
+## Original Policy
+Nobody can do anything.
+
+## Expected Decision
+REJECTED
+
+## LLM's Decision
+REJECTED
+
+## Manual Review
+[ ] Correct (LLM matches expected)
+[ ] Incorrect (LLM differs from expected)
+[ ] Override to: _______________
+
+## Bellow is LLMs reasoning for this decision
+---------------------------------------
+
+## Original Policy Statement
+"Nobody can do anything."
+
+## Policy Analysis Summary
+- Policy Type: Set
+- Rule Type: Prohibition
+- Actions: Not specified (vague)
+- Actors: Not specified (vague)
+- Target Assets: Not specified (vague)
+
+## Issues Detected
+1. **Vague Action Issues (CRITICAL - REJECTION TRIGGERS):**
+   - The policy contains the vague action verb "anything" which is non-measurable and overly broad.
+   - It does not specify any particular actions, making it impossible to enforce.
+
+2. **Completeness Issues (May Require Revision):**
+   - Missing explicit actions, actors, and target assets make the policy incomplete and impractical.
+
+3. **Real-world Implementation Issues:**
+   - The policy is overly broad and impractical for enforcement in real-world scenarios.
+   - Prohibiting any action by anybody is unrealistic and unenforceable.
+
+## Decision
+- Status: REJECTED
+- Rationale: The policy statement is too vague, lacking specificity on actions, actors, and assets, making it impossible to implement in a practical setting.
+
+## Alternative Policy
+If the goal is to restrict specific actions, actors, or assets, a revised policy could be: "Unauthorized personnel are prohibited from accessing confidential data during non-business hours."
+
+## Improvement Suggestions
+- Clearly define specific actions, actors, and assets in the policy.
+- Avoid using overly broad terms like "anybody" or "anything" to ensure clarity and enforceability.
