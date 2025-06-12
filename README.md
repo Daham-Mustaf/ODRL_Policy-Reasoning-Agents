@@ -1,4 +1,5 @@
-![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+[![LangChain](https://img.shields.io/badge/🦜🔗-LangChain-brightgreen.svg)](https://www.langchain.com/)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 ![Issues](https://img.shields.io/github/issues/Daham-Mustaf/ODRL_Policy-Reasoning-Agents)
 
 
