@@ -1,5 +1,4 @@
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
-![License](https://img.shields.io/github/license/Daham-Mustaf/ODRL_Policy-Reasoning-Agents)
 ![Issues](https://img.shields.io/github/issues/Daham-Mustaf/ODRL_Policy-Reasoning-Agents)
 
 
