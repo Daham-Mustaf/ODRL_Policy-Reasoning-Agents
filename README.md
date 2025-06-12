@@ -1,3 +1,8 @@
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![License](https://img.shields.io/github/license/Daham-Mustaf/ODRL_Policy-Reasoning-Agents)
+![Issues](https://img.shields.io/github/issues/Daham-Mustaf/ODRL_Policy-Reasoning-Agents)
+
+
 # ODRL Policy-Reasoning Agents
 
 An ontology-grounded multi-agent system for reliable Open Digital Rights Language (ODRL) policy generation and validation.
