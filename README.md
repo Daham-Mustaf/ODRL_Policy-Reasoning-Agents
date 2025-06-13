@@ -1,6 +1,7 @@
 [![LangChain](https://img.shields.io/badge/🦜🔗-LangChain-brightgreen.svg)](https://www.langchain.com/)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 ![Issues](https://img.shields.io/github/issues/Daham-Mustaf/ODRL_Policy-Reasoning-Agents)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15655986.svg)](https://doi.org/10.5281/zenodo.15655986)
 
 
 # ODRL Policy-Reasoning Agents
