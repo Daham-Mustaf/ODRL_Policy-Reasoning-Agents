@@ -10,7 +10,7 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 
-# --- ENHANCED POLICY SHAPES ---
+# --- POLICY SHAPES ---
 
 # Complete Policy Validation
 ex:PolicyShape a sh:NodeShape ;
